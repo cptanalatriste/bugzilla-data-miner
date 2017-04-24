@@ -42,6 +42,8 @@ public class RestClient {
 			System.out.println("report.getId(): " + report.getId());
 			System.out.println("report.getResolution(): " + report.getResolution());
 			System.out.println("report.getPriority(): " + report.getPriority());
+			System.out.println("report.getPriority(): " + report.getCreationDate());
+			System.out.println("report.getReportedBy(): " + report.getReportedBy());
 
 
 		}

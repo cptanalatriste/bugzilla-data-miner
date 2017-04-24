@@ -3,6 +3,7 @@ package ucl.crest.bugzilla.miner;
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BugReport {
@@ -11,7 +12,11 @@ public class BugReport {
 	private Resolution resolution;
 	private Status status;
 	private Priority priority;
+	
+	@JsonProperty("creation_time")
 	private Date creationDate;
+	
+	@JsonProperty("creator")
 	private User reportedBy;
 	private User resolvedBy;
 	private Date resolutionStart;
