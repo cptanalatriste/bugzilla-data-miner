@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Hello world!
+ * The project entry point.
  *
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+		System.out.println("Connecting to BugZilla REST API ...");
 
 		RestClient restClient = new RestClient(new Configuration());
 		List<BugReport> bugReports = restClient.getLibreOfficeBugs();

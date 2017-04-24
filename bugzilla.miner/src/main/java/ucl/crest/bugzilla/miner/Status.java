@@ -1,5 +1,10 @@
 package ucl.crest.bugzilla.miner;
 
-public enum Status {
-
+public class Status {
+	
+	private String value;
+	
+	public Status(String value){
+		this.value = value;
+	}
 }

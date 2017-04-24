@@ -1,5 +1,11 @@
 package ucl.crest.bugzilla.miner;
 
-public enum Resolution {
+public class Resolution {
 
+	private String value;
+	
+	public Resolution(String value) {
+		this.value = value;
+	}
+	
 }

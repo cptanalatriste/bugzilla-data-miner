@@ -2,13 +2,15 @@ package ucl.crest.bugzilla.miner;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BugReport {
 	
-	private String issueKey;
+	private String id;
 	private Resolution resolution;
 	private Status status;
-	private Priority prioriy;
+	private Priority priority;
 	private Date creationDate;
 	private User reportedBy;
 	private User resolvedBy;
@@ -17,11 +19,11 @@ public class BugReport {
 	private Date resolverInProgress;
 	
 	
-	public String getIssueKey() {
-		return issueKey;
+	public String getId() {
+		return id;
 	}
-	public void setIssueKey(String issueKey) {
-		this.issueKey = issueKey;
+	public void setId(String issueKey) {
+		this.id = issueKey;
 	}
 	public Resolution getResolution() {
 		return resolution;
@@ -35,11 +37,11 @@ public class BugReport {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public Priority getPrioriy() {
-		return prioriy;
+	public Priority getPriority() {
+		return priority;
 	}
-	public void setPrioriy(Priority prioriy) {
-		this.prioriy = prioriy;
+	public void setPriority(Priority prioriy) {
+		this.priority = prioriy;
 	}
 	public Date getCreationDate() {
 		return creationDate;
