@@ -40,10 +40,10 @@ public class CsvExporter {
 		
 		for(BugReport bugR : bugReports){
 			List<Object> record = new ArrayList<Object>();
-			record.add(bugR.getIssueKey());
+			record.add(bugR.getId());
 			record.add(bugR.getResolution());
 			record.add(bugR.getStatus());
-			record.add(bugR.getPrioriy());
+			record.add(bugR.getPriority().toString());
 			record.add(bugR.getCreationDate());
 			record.add(bugR.getReportedBy());
 			record.add(bugR.getResolvedBy());
