@@ -1,5 +1,7 @@
 package ucl.crest.bugzilla.miner;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,7 +15,10 @@ public class App {
 		RestClient restClient = new RestClient();
 		List<BugReport> bugReports = restClient.getLibreOfficeBugs();
 		
-		CsvExporter exporter = new CsvExporter();
-		exporter.generateCsv();
+		try {
+			CsvExporter.generateCsv(new File("test.csv"), bugReports);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
