@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import ucl.crest.bugzilla.miner.model.BugReport;
+import ucl.crest.bugzilla.miner.rest.RestClient;
+
 /**
  * The project entry point.
  *

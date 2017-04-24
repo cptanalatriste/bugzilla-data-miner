@@ -1,10 +1,10 @@
-package ucl.crest.bugzilla.miner;
+package ucl.crest.bugzilla.miner.model;
 
-public class User {
+public class Resolution {
 
 	private String value;
-
-	public User(String value) {
+	
+	public Resolution(String value) {
 		this.value = value;
 	}
 
@@ -12,5 +12,7 @@ public class User {
 	public String toString() {
 		return value;
 	}
-
+	
+	
+	
 }

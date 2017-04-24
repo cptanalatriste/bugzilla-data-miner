@@ -1,4 +1,4 @@
-package ucl.crest.bugzilla.miner;
+package ucl.crest.bugzilla.miner.model;
 
 public class Status {
 	
