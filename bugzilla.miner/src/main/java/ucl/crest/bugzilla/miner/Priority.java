@@ -2,7 +2,7 @@ package ucl.crest.bugzilla.miner;
 
 public class Priority {
 	private String value;
-	
+
 	public Priority(String value) {
 		this.value = value;
 	}
@@ -14,6 +14,10 @@ public class Priority {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return value;
+	}
+
 }
