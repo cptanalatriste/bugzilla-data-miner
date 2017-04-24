@@ -1,0 +1,8 @@
+*.DS_Store
+*.metadata
+*.recommenders
+*.classpath
+*.metadata
+*.project
+*.settings
+bugzilla.miner/target
