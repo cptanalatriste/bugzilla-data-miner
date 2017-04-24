@@ -2,7 +2,6 @@ package ucl.crest.bugzilla.miner;
 
 import java.util.Date;
 
-import javax.net.ssl.SSLEngineResult.Status;
 
 public class BugReport {
 	
