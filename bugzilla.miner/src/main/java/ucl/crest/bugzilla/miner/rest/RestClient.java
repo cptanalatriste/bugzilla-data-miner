@@ -60,6 +60,7 @@ public class RestClient {
 
 			System.out.println("report.getResolvedBy(): " + report.getResolvedBy());
 			System.out.println("report.getResolutionDate(): " + report.getResolutionDate());
+			System.out.println("report.getResolverAssigned(): " + report.getResolverAssigned());
 
 		}
 

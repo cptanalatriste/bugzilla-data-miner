@@ -18,36 +18,36 @@ import ucl.crest.bugzilla.miner.model.BugReport;
  *
  */
 public class CsvExporter {
-	
-	//TODO: Remove later
-	
+
+	// TODO: Remove later
+
 	/*
-	 * 	private String issueKey; --
-	private Resolution resolution; --
-	private Status status; --
-	private Priority prioriy; --
-	private Date creationDate; --
-	private User reportedBy; --
-	private User resolvedBy; --
-	private Date resolutionStart;?
-	private Date resolverAssigned; --
-	private Date resolverInProgress; --
-	
-	private Date resolutionDate; --
-	private double resolutionTime; -- 
-	private User priorityChanger; -- 
-	private Priority originalPriority; --
-	private Priority newPriority; --
-	private Date priorityChange;
+	 * private String issueKey; -- private Resolution resolution; -- private
+	 * Status status; -- private Priority prioriy; -- private Date creationDate;
+	 * -- private User reportedBy; -- private User resolvedBy; -- private Date
+	 * resolutionStart;? private Date resolverAssigned; -- private Date
+	 * resolverInProgress; --
+	 * 
+	 * private Date resolutionDate; -- private double resolutionTime; -- private
+	 * User priorityChanger; -- private Priority originalPriority; -- private
+	 * Priority newPriority; -- private Date priorityChange;
 	 *
 	 *
 	 */
-	
-	
-	
-	//Issue Key,Resolution,Status,Priority,Earliest Version,Latest Version,Earliest Fix Version,Latest Fix Version,Commits,Commits with Tags,Earliest Tag,JIRA/GitHub Distance,JIRA Distance,GitHub distance,Fix distance,JIRA Distance in Releases,GitHub Distance in Releases,Fix Distance in Releases,Creation Date,Closest Release JIRA,Closest Tag Git,Reported By,JIRA Resolved By,JIRA Resolver Start,JIRA Resolver Assignment,JIRA Resolver In Progress,JIRA Resolved Date,JIRA Resolution Time,Git Committer,Git Commit Date,Avg Lines,Git Resolution Time,Comments in JIRA,Priority Changer,Original Priority,New Priority,Git Repository,Total Deletions,Total Insertions,Avg Files,Change Log Size,Number of Reopens,Summary,Description,Project Key,Priority Change Date
 
-	
+	// Issue Key,Resolution,Status,Priority,Earliest Version,Latest
+	// Version,Earliest Fix Version,Latest Fix Version,Commits,Commits with
+	// Tags,Earliest Tag,JIRA/GitHub Distance,JIRA Distance,GitHub distance,Fix
+	// distance,JIRA Distance in Releases,GitHub Distance in Releases,Fix
+	// Distance in Releases,Creation Date,Closest Release JIRA,Closest Tag
+	// Git,Reported By,JIRA Resolved By,JIRA Resolver Start,JIRA Resolver
+	// Assignment,JIRA Resolver In Progress,JIRA Resolved Date,JIRA Resolution
+	// Time,Git Committer,Git Commit Date,Avg Lines,Git Resolution Time,Comments
+	// in JIRA,Priority Changer,Original Priority,New Priority,Git
+	// Repository,Total Deletions,Total Insertions,Avg Files,Change Log
+	// Size,Number of Reopens,Summary,Description,Project Key,Priority Change
+	// Date
+
 	private static final Object[] FILE_HEADER = { "Issue Key", "Resolution", "Status", "Priority", "Creation Date",
 			"Reported By", "JIRA Resolved By", "JIRA Resolver Start", "JIRA Resolver Assignment",
 			"JIRA Resolver In Progress", "JIRA Resolved Date", "Git Resolution Time", "Priority Changer",
@@ -74,7 +74,6 @@ public class CsvExporter {
 			record.add(bugR.getResolverInProgress());
 
 			record.add(bugR.getResolutionDate());
-			record.add(Double.toString(bugR.getResolutionTime()));
 			record.add(bugR.getPriorityChanger());
 			record.add(bugR.getOriginalPriority());
 			record.add(bugR.getNewPriority());

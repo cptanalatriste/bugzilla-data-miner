@@ -13,7 +13,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class BugReport {
 
 	protected static final Object RESOLVED_STATUS = "RESOLVED";
+	protected static final Object ASSIGNED_STATUS = "ASSIGNED";
+
 	protected static final Object STATUS_FIELD = "status";
+	protected static final Object ASSIGNEE_FIELD = "assigned_to";
 
 	@JsonProperty("id")
 	private String issueKey;
@@ -27,12 +30,12 @@ public class BugReport {
 	@JsonProperty("creator")
 	private User reportedBy;
 	private User resolvedBy;
+	private Date resolutionDate;
+
 	private Date resolutionStart;
 	private Date resolverAssigned;
 	private Date resolverInProgress;
 
-	private Date resolutionDate;
-	private double resolutionTime;
 	private User priorityChanger;
 	private Priority originalPriority;
 	private Priority newPriority;
@@ -53,6 +56,24 @@ public class BugReport {
 		};
 	}
 
+	private Predicate<BugHistory> getResolverAssignedPredicate() {
+		final String resolver = this.getResolvedBy().toString();
+
+		return new Predicate<BugHistory>() {
+
+			public boolean evaluate(BugHistory bugHistory) {
+				for (ChangeItem changeItem : bugHistory.getChanges()) {
+					if (ASSIGNEE_FIELD.equals(changeItem.getField().toString())
+							&& resolver.equals(changeItem.getAdded())) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+		};
+	}
+
 	public void applyBugHistory(BugHistory[] bugHistory) {
 		Predicate<BugHistory> resolvedPredicate = BugReport.getResolvedPredicate();
 
@@ -62,6 +83,13 @@ public class BugReport {
 		if (resolvedHistory != null) {
 			this.resolvedBy = resolvedHistory.getWho();
 			this.resolutionDate = resolvedHistory.getWhen();
+
+			Predicate<BugHistory> resolverAssignedPredicate = this.getResolverAssignedPredicate();
+			BugHistory resolverAssignedHistory = IterableUtils.find(historyList, resolverAssignedPredicate);
+
+			if (resolverAssignedHistory != null) {
+				this.resolverAssigned = resolverAssignedHistory.getWhen();
+			}
 		}
 
 	}
@@ -152,14 +180,6 @@ public class BugReport {
 
 	public void setResolutionDate(Date resolutionDate) {
 		this.resolutionDate = resolutionDate;
-	}
-
-	public double getResolutionTime() {
-		return resolutionTime;
-	}
-
-	public void setResolutionTime(double resolutionTime) {
-		this.resolutionTime = resolutionTime;
 	}
 
 	public User getPriorityChanger() {
