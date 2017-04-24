@@ -53,22 +53,22 @@ public class CsvExporter {
 		for(BugReport bugR : bugReports){
 			List<Object> record = new ArrayList<Object>();
 			record.add(bugR.getId());
-			record.add(bugR.getResolution().toString());
-			record.add(bugR.getStatus().toString());
-			record.add(bugR.getPriority().toString());
-			record.add(bugR.getCreationDate().toString());
-			record.add(bugR.getReportedBy().toString());
-			record.add(bugR.getResolvedBy().toString());
-			record.add(bugR.getResolutionStart().toString());
-			record.add(bugR.getResolverAssigned().toString());
-			record.add(bugR.getResolverInProgress().toString());
+			record.add(bugR.getResolution());
+			record.add(bugR.getStatus());
+			record.add(bugR.getPriority());
+			record.add(bugR.getCreationDate());
+			record.add(bugR.getReportedBy());
+			record.add(bugR.getResolvedBy());
+			record.add(bugR.getResolutionStart());
+			record.add(bugR.getResolverAssigned());
+			record.add(bugR.getResolverInProgress());
 			
-			record.add(bugR.getResolutionDate().toString());
+			record.add(bugR.getResolutionDate());
 			record.add(Double.toString(bugR.getResolutionTime()));
-			record.add(bugR.getPriorityChanger().toString());
-			record.add(bugR.getOriginalPriority().toString());
-			record.add(bugR.getNewPriority().toString());
-			record.add(bugR.getPriorityChange().toString());
+			record.add(bugR.getPriorityChanger());
+			record.add(bugR.getOriginalPriority());
+			record.add(bugR.getNewPriority());
+			record.add(bugR.getPriorityChange());
 			
 			csvFilePrinter.printRecord(record);
 		}
