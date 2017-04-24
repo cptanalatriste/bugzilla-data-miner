@@ -40,6 +40,10 @@ public class RestClient {
 
 		for (BugReport report : response.getBugs()) {
 			System.out.println("report.getId(): " + report.getId());
+			System.out.println("report.getResolution(): " + report.getResolution());
+			System.out.println("report.getPriority(): " + report.getPriority());
+
+
 		}
 
 		List<BugReport> bugReports = new ArrayList<BugReport>(Arrays.asList(response.getBugs()));
