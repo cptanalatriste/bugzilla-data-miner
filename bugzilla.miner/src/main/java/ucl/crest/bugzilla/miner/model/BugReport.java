@@ -1,22 +1,14 @@
 package ucl.crest.bugzilla.miner.model;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
-import org.apache.commons.collections4.IterableUtils;
-import org.apache.commons.collections4.Predicate;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BugReport {
 
-	protected static final Object RESOLVED_STATUS = "RESOLVED";
-	protected static final Object ASSIGNED_STATUS = "ASSIGNED";
 
-	protected static final Object STATUS_FIELD = "status";
-	protected static final Object ASSIGNEE_FIELD = "assigned_to";
 
 	@JsonProperty("id")
 	private String issueKey;
@@ -31,68 +23,15 @@ public class BugReport {
 	private User reportedBy;
 	private User resolvedBy;
 	private Date resolutionDate;
-
-	private Date resolutionStart;
 	private Date resolverAssigned;
+	private Date resolutionStart;
+	
 	private Date resolverInProgress;
 
 	private User priorityChanger;
 	private Priority originalPriority;
 	private Priority newPriority;
 	private Date priorityChange;
-
-	private static Predicate<BugHistory> getResolvedPredicate() {
-		return new Predicate<BugHistory>() {
-
-			public boolean evaluate(BugHistory bugHistory) {
-				for (ChangeItem changeItem : bugHistory.getChanges()) {
-					if (STATUS_FIELD.equals(changeItem.getField().toString())
-							&& RESOLVED_STATUS.equals(changeItem.getAdded())) {
-						return true;
-					}
-				}
-				return false;
-			}
-		};
-	}
-
-	private Predicate<BugHistory> getResolverAssignedPredicate() {
-		final String resolver = this.getResolvedBy().toString();
-
-		return new Predicate<BugHistory>() {
-
-			public boolean evaluate(BugHistory bugHistory) {
-				for (ChangeItem changeItem : bugHistory.getChanges()) {
-					if (ASSIGNEE_FIELD.equals(changeItem.getField().toString())
-							&& resolver.equals(changeItem.getAdded())) {
-						return true;
-					}
-				}
-
-				return false;
-			}
-		};
-	}
-
-	public void applyBugHistory(BugHistory[] bugHistory) {
-		Predicate<BugHistory> resolvedPredicate = BugReport.getResolvedPredicate();
-
-		List<BugHistory> historyList = Arrays.asList(bugHistory);
-		BugHistory resolvedHistory = IterableUtils.find(historyList, resolvedPredicate);
-
-		if (resolvedHistory != null) {
-			this.resolvedBy = resolvedHistory.getWho();
-			this.resolutionDate = resolvedHistory.getWhen();
-
-			Predicate<BugHistory> resolverAssignedPredicate = this.getResolverAssignedPredicate();
-			BugHistory resolverAssignedHistory = IterableUtils.find(historyList, resolverAssignedPredicate);
-
-			if (resolverAssignedHistory != null) {
-				this.resolverAssigned = resolverAssignedHistory.getWhen();
-			}
-		}
-
-	}
 
 	public String getIssueKey() {
 		return issueKey;
