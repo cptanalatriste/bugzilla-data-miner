@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java ec.Evolve -file ec/app/priority_inflation/priority_inflation.params
