@@ -11,7 +11,7 @@ eval		= ec.simple.SimpleEvaluator
 stat		= ec.simple.SimpleStatistics
 exch		= ec.simple.SimpleExchanger
 
-generations		= 200
+generations		= 50
 quit-on-run-complete	= true
 checkpoint		= false
 checkpoint-prefix	= ec
@@ -22,36 +22,28 @@ stat.file		= $out.stat
 pop.subpops		= 1
 pop.subpop.0		= ec.Subpopulation
 
-pop.subpop.0.size 		= 50
+pop.subpop.0.size 		= 20
 pop.subpop.0.duplicate-retries 	= 0
 pop.subpop.0.species 		= ec.vector.IntegerVectorSpecies
 
 pop.subpop.0.species.fitness 	= ec.simple.SimpleFitness
 pop.subpop.0.species.ind	= ec.vector.IntegerVectorIndividual
 
-pop.subpop.0.species.genome-size	= 5
+pop.subpop.0.species.genome-size	= 3
 
-vector.species.max-gene = 10000
+vector.species.max-gene = 1000
 
-#Process Type: 1, 2, or 3 (Unsupervised, Gatekeeper, Throttling, respectively)
-pop.subpop.0.species.min-gene.0		= 1
-pop.subpop.0.species.max-gene.0		= 3
+#Number of Devs (0 to 1000)
+pop.subpop.0.species.min-gene.0		= 0
+pop.subpop.0.species.max-gene.0		= 1000
 
-#Number of gate keepers: 0 to 1000
+#Numbers of Testers (0 to 15)
 pop.subpop.0.species.min-gene.1		= 0
-pop.subpop.0.species.max-gene.1		= 1000
+pop.subpop.0.species.max-gene.1		= 15
 
-#Efficiency of the gate keepers 0 to 100 (Percentage)
+#Number of defects before release (0 to 1000)
 pop.subpop.0.species.min-gene.2		= 0
-pop.subpop.0.species.max-gene.2		= 100
-
-#Penalty in case of inflation 0 to 1000
-pop.subpop.0.species.min-gene.3		= 0
-pop.subpop.0.species.max-gene.3		= 1000
-
-#Efficiency of developers in catching inflation
-pop.subpop.0.species.min-gene.4		= 0
-pop.subpop.0.species.max-gene.4		= 100
+pop.subpop.0.species.max-gene.2		= 1000
 
 pop.subpop.0.species.crossover-type	= one
 pop.subpop.0.species.mutation-type	= random-walk

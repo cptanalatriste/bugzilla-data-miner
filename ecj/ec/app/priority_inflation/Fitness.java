@@ -24,29 +24,13 @@ public class Fitness extends Problem implements SimpleProblemForm
 
 	IntegerVectorIndividual candidate = (IntegerVectorIndividual)ind;
 
-	String processType = "";
-	switch(candidate.genome[0]){
-		case 1:
-			processType = "unsupervised";
-			break;
-		case 2:
-			processType = "gatekeeper";
-			break;
-		case 3:
-			processType = "throttling";
-			break;
-		default:
-			state.output.fatal("Error: Integer at location 0 is not '1', '2', or '3'. Cannot process", null);
-			break;
-	}
+	int numDevs = candidate.genome[0];
+	int numTesters = candidate.genome[1];
+	int numDefects = candidate.genome[2];
 
-	int numGateKeepers = candidate.genome[1];
-        int gateKeeperEfficiency = candidate.genome[2];
-        int inflationPenalty = candidate.genome[3];
-        int developerInflationCatchEfficiency = candidate.genome[4];
 	String output = null;
 	try{
-		Process process = Runtime.getRuntime().exec("./fitness_script.bsh");
+		Process process = Runtime.getRuntime().exec("./fitness_script.bsh " + numDevs + " " + numTesters + " " + numDefects);
         	BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         	String line;
 		while((line=reader.readLine()) != null){
