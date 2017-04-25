@@ -12,6 +12,7 @@ import com.sun.jersey.api.json.JSONConfiguration;
 
 import ucl.crest.bugzilla.miner.Configuration;
 import ucl.crest.bugzilla.miner.model.BugReport;
+import ucl.crest.bugzilla.miner.model.HistoryExplorer;
 
 /**
  * Get bug information from BugZilla. Relies heavily on Jersey.
@@ -56,11 +57,13 @@ public class RestClient {
 			BugHistoryWrapper bugHistoryResponse = bugHistoryResource.accept(JSON_MEDIA_TYPE)
 					.get(BugHistoryWrapper.class);
 
-			report.applyBugHistory(bugHistoryResponse.getBugs()[0].getBugHistory());
+			HistoryExplorer historyExplorer = new HistoryExplorer(report);
+			historyExplorer.applyBugHistory(bugHistoryResponse.getBugs()[0].getBugHistory());
 
 			System.out.println("report.getResolvedBy(): " + report.getResolvedBy());
 			System.out.println("report.getResolutionDate(): " + report.getResolutionDate());
 			System.out.println("report.getResolverAssigned(): " + report.getResolverAssigned());
+			System.out.println("report.getResolutionStart(): " + report.getResolutionStart());
 
 		}
 
