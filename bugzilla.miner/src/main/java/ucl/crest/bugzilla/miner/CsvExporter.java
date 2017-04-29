@@ -19,65 +19,38 @@ import ucl.crest.bugzilla.miner.model.BugReport;
  */
 public class CsvExporter {
 
-	// TODO: Remove later
-
-	/*
-	 * private String issueKey; -- private Resolution resolution; -- private
-	 * Status status; -- private Priority prioriy; -- private Date creationDate;
-	 * -- private User reportedBy; -- private User resolvedBy; -- private Date
-	 * resolutionStart;? private Date resolverAssigned; -- private Date
-	 * resolverInProgress; --
-	 * 
-	 * private Date resolutionDate; -- private double resolutionTime; -- private
-	 * User priorityChanger; -- private Priority originalPriority; -- private
-	 * Priority newPriority; -- private Date priorityChange;
-	 *
-	 *
-	 */
-
-	// Issue Key,Resolution,Status,Priority,Earliest Version,Latest
-	// Version,Earliest Fix Version,Latest Fix Version,Commits,Commits with
-	// Tags,Earliest Tag,JIRA/GitHub Distance,JIRA Distance,GitHub distance,Fix
-	// distance,JIRA Distance in Releases,GitHub Distance in Releases,Fix
-	// Distance in Releases,Creation Date,Closest Release JIRA,Closest Tag
-	// Git,Reported By,JIRA Resolved By,JIRA Resolver Start,JIRA Resolver
-	// Assignment,JIRA Resolver In Progress,JIRA Resolved Date,JIRA Resolution
-	// Time,Git Committer,Git Commit Date,Avg Lines,Git Resolution Time,Comments
-	// in JIRA,Priority Changer,Original Priority,New Priority,Git
-	// Repository,Total Deletions,Total Insertions,Avg Files,Change Log
-	// Size,Number of Reopens,Summary,Description,Project Key,Priority Change
-	// Date
-
 	private static final Object[] FILE_HEADER = { "Issue Key", "Resolution", "Status", "Priority", "Creation Date",
 			"Reported By", "JIRA Resolved By", "JIRA Resolver Start", "JIRA Resolver Assignment",
-			"JIRA Resolver In Progress", "JIRA Resolved Date", "Git Resolution Time", "Priority Changer",
-			"Original Priority", "New Priority", "Priority Change Date" };
+			"JIRA Resolver In Progress", "JIRA Resolved Date", "Priority Changer", "Original Priority", "New Priority",
+			"Priority Change Date" };
+
+	private static final String NEW_LINE_SEPARATOR = "\n";
 
 	public static void generateCsv(File toCreate, Collection<BugReport> bugReports) throws IOException {
-		CSVFormat csvFileFormat = CSVFormat.EXCEL.withHeader();
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
 		FileWriter fileWriter = new FileWriter(toCreate);
 		CSVPrinter csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
 
 		csvFilePrinter.printRecord(FILE_HEADER);
 
-		for (BugReport bugR : bugReports) {
+		for (BugReport bugReport : bugReports) {
 			List<Object> record = new ArrayList<Object>();
-			record.add(bugR.getIssueKey());
-			record.add(bugR.getResolution());
-			record.add(bugR.getStatus());
-			record.add(bugR.getPriority());
-			record.add(bugR.getCreationDate());
-			record.add(bugR.getReportedBy());
-			record.add(bugR.getResolvedBy());
-			record.add(bugR.getResolutionStart());
-			record.add(bugR.getResolverAssigned());
-			record.add(bugR.getResolverInProgress());
+			record.add(bugReport.getIssueKey());
+			record.add(bugReport.getResolution());
+			record.add(bugReport.getStatus());
+			record.add(bugReport.getPriority());
+			record.add(bugReport.getCreationDate());
+			record.add(bugReport.getReportedBy());
+			record.add(bugReport.getResolvedBy());
+			record.add(bugReport.getResolutionStart());
+			record.add(bugReport.getResolverAssigned());
+			record.add(bugReport.getResolverInProgress());
 
-			record.add(bugR.getResolutionDate());
-			record.add(bugR.getPriorityChanger());
-			record.add(bugR.getOriginalPriority());
-			record.add(bugR.getNewPriority());
-			record.add(bugR.getPriorityChange());
+			record.add(bugReport.getResolutionDate());
+			record.add(bugReport.getPriorityChanger());
+			record.add(bugReport.getOriginalPriority());
+			record.add(bugReport.getNewPriority());
+			record.add(bugReport.getPriorityChange());
 
 			csvFilePrinter.printRecord(record);
 		}

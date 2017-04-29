@@ -37,7 +37,7 @@ public class RestClient {
 
 		List<BugReport> bugReports = new ArrayList<BugReport>();
 		for (String component : configuration.getComponentCatalog()) {
-			int limit = 0;
+			int limit = 10;
 
 			try {
 				String componentReportsUrl = configuration.getAllBugsResource(limit, component);
@@ -68,6 +68,7 @@ public class RestClient {
 
 				bugReports.addAll(Arrays.asList(componentReportsResponse.getBugs()));
 			} catch (Exception e) {
+				//TODO: Implement a fallback method based on a limit value. We now that 1000 works
 				System.out.println("ERROR: Couldn't retrieve reports for component " + component);
 				e.printStackTrace();
 			}

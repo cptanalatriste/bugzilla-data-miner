@@ -10,6 +10,7 @@ public class Configuration {
 	private String home = "https://bugs.documentfoundation.org/rest/bug";
 	private String historyFragment = "history";
 	private String product = "LibreOffice";
+	private int observedMaximumReports = 4000;
 
 	/***
 	 * The components taken from
@@ -40,6 +41,10 @@ public class Configuration {
 
 	public String getBugHistoryResource(String issueKey) {
 		return UriBuilder.fromUri(this.home).path(issueKey).path(historyFragment).build().toString();
+	}
+
+	public int getMaximumReports() {
+		return (int) 0.9 * observedMaximumReports;
 	}
 
 }

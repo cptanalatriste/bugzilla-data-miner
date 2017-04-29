@@ -1,20 +1,16 @@
 package ucl.crest.bugzilla.miner.model;
 
 public class Status {
-	
+
 	private String value;
-	
-	public Status(String value){
+
+	public Status(String value) {
 		this.value = value;
 	}
 
-	public String getValue() {
+	@Override
+	public String toString() {
 		return value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-	
-	
 }
