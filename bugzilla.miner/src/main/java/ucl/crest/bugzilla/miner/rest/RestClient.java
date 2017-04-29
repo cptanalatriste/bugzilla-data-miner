@@ -44,13 +44,9 @@ public class RestClient {
 				.get(BugReportListWrapper.class);
 
 		for (BugReport report : allReportsResponse.getBugs()) {
-			System.out.println("report.getId(): " + report.getIssueKey());
-			System.out.println("report.getResolution(): " + report.getResolution());
-			System.out.println("report.getPriority(): " + report.getPriority());
-			System.out.println("report.getPriority(): " + report.getCreationDate());
-			System.out.println("report.getReportedBy(): " + report.getReportedBy());
+			String issueKey = report.getIssueKey();
 
-			String bugHistoryUrl = configuration.getBugHistoryResource(report.getIssueKey());
+			String bugHistoryUrl = configuration.getBugHistoryResource(issueKey);
 			System.out.println("bugHistoryUrl: " + bugHistoryUrl);
 
 			WebResource bugHistoryResource = client.resource(bugHistoryUrl);
@@ -60,10 +56,7 @@ public class RestClient {
 			HistoryExplorer historyExplorer = new HistoryExplorer(report);
 			historyExplorer.applyBugHistory(bugHistoryResponse.getBugs()[0].getBugHistory());
 
-			System.out.println("report.getResolvedBy(): " + report.getResolvedBy());
-			System.out.println("report.getResolutionDate(): " + report.getResolutionDate());
-			System.out.println("report.getResolverAssigned(): " + report.getResolverAssigned());
-			System.out.println("report.getResolutionStart(): " + report.getResolutionStart());
+			System.out.println("Parsed bug: \n" + report);
 
 		}
 
