@@ -2,13 +2,12 @@ package ucl.crest.bugzilla.miner.model;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BugReport {
-
-
 
 	@JsonProperty("id")
 	private String issueKey;
@@ -25,13 +24,13 @@ public class BugReport {
 	private Date resolutionDate;
 	private Date resolverAssigned;
 	private Date resolutionStart;
-	
-	private Date resolverInProgress;
 
 	private User priorityChanger;
 	private Priority originalPriority;
 	private Priority newPriority;
 	private Date priorityChange;
+
+	private Date resolverInProgress;
 
 	public String getIssueKey() {
 		return issueKey;
@@ -151,6 +150,16 @@ public class BugReport {
 
 	public void setPriorityChange(Date priorityChange) {
 		this.priorityChange = priorityChange;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("issueKey", issueKey).append("resolution", resolution)
+				.append("priority", priority).append("creationDate", creationDate).append("reportedBy", reportedBy)
+				.append("resolvedBy", resolvedBy).append("resolutionDate", resolutionDate)
+				.append("resolverAssigned", resolverAssigned).append("resolutionStart", resolutionStart)
+				.append("priorityChanger", priorityChanger).append("originalPriority", originalPriority)
+				.append("newPriority", newPriority).append("priorityChange", priorityChange).toString();
 	}
 
 }

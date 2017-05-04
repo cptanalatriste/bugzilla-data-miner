@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.sun.jersey.api.client.Client;
+
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -34,40 +35,45 @@ public class RestClient {
 		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 		Client client = Client.create(clientConfig);
 
-		int limit = 10;
+		List<BugReport> bugReports = new ArrayList<BugReport>();
+		for (String component : configuration.getComponentCatalog()) {
+			int limit = 10;
 
-		String allReportsUrl = configuration.getAllBugsResource(limit);
-		WebResource alLreportsResource = client.resource(allReportsUrl);
+			try {
+				String componentReportsUrl = configuration.getAllBugsResource(limit, component);
+				WebResource componentsReportsResource = client.resource(componentReportsUrl);
 
-		System.out.println("allReportsUrl: " + allReportsUrl);
-		BugReportListWrapper allReportsResponse = alLreportsResource.accept(JSON_MEDIA_TYPE)
-				.get(BugReportListWrapper.class);
+				System.out.println("componentReportsUrl: " + componentReportsUrl);
+				BugReportListWrapper componentReportsResponse = componentsReportsResource.accept(JSON_MEDIA_TYPE)
+						.get(BugReportListWrapper.class);
 
-		for (BugReport report : allReportsResponse.getBugs()) {
-			System.out.println("report.getId(): " + report.getIssueKey());
-			System.out.println("report.getResolution(): " + report.getResolution());
-			System.out.println("report.getPriority(): " + report.getPriority());
-			System.out.println("report.getPriority(): " + report.getCreationDate());
-			System.out.println("report.getReportedBy(): " + report.getReportedBy());
+				System.out.println(
+						"componentReportsResponse.getBugs().length: " + componentReportsResponse.getBugs().length);
+				for (BugReport report : componentReportsResponse.getBugs()) {
+					String issueKey = report.getIssueKey();
 
-			String bugHistoryUrl = configuration.getBugHistoryResource(report.getIssueKey());
-			System.out.println("bugHistoryUrl: " + bugHistoryUrl);
+					String bugHistoryUrl = configuration.getBugHistoryResource(issueKey);
+					System.out.println("bugHistoryUrl: " + bugHistoryUrl);
 
-			WebResource bugHistoryResource = client.resource(bugHistoryUrl);
-			BugHistoryWrapper bugHistoryResponse = bugHistoryResource.accept(JSON_MEDIA_TYPE)
-					.get(BugHistoryWrapper.class);
+					WebResource bugHistoryResource = client.resource(bugHistoryUrl);
+					BugHistoryWrapper bugHistoryResponse = bugHistoryResource.accept(JSON_MEDIA_TYPE)
+							.get(BugHistoryWrapper.class);
 
-			HistoryExplorer historyExplorer = new HistoryExplorer(report);
-			historyExplorer.applyBugHistory(bugHistoryResponse.getBugs()[0].getBugHistory());
+					HistoryExplorer historyExplorer = new HistoryExplorer(report);
+					historyExplorer.applyBugHistory(bugHistoryResponse.getBugs()[0].getBugHistory());
 
-			System.out.println("report.getResolvedBy(): " + report.getResolvedBy());
-			System.out.println("report.getResolutionDate(): " + report.getResolutionDate());
-			System.out.println("report.getResolverAssigned(): " + report.getResolverAssigned());
-			System.out.println("report.getResolutionStart(): " + report.getResolutionStart());
+					System.out.println("Parsed bug: \n" + report);
 
+				}
+
+				bugReports.addAll(Arrays.asList(componentReportsResponse.getBugs()));
+			} catch (Exception e) {
+				//TODO: Implement a fallback method based on a limit value. We now that 1000 works
+				System.out.println("ERROR: Couldn't retrieve reports for component " + component);
+				e.printStackTrace();
+			}
 		}
 
-		List<BugReport> bugReports = new ArrayList<BugReport>(Arrays.asList(allReportsResponse.getBugs()));
 		return bugReports;
 	}
 
