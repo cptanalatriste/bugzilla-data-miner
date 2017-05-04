@@ -1,5 +1,17 @@
 #!/bin/bash
 
+original_num_developers=100
+original_num_testers=5
+original_num_defects=100
+
+cost_of_developer_increase=1.0
+cost_of_tester_increase=0.5
+cost_of_defect_increase=0.25
+
+cost_of_developer_decrease=0.5
+cost_of_tester_decrease=0.25
+cost_of_defect_decrease=0.12
+
 # $1 == number of developers
 # $2 == number of testers
 # $3 == number of defects
@@ -35,4 +47,24 @@ if [ "$(cat $current_worst)" == "100.0" ];then
   exit 1
 fi
 
-cat $current_worst
+fitness=$(echo "$(cat $current_worst) * 1000" | bc -l)
+
+if [ $1 -le $original_num_developers ]; then
+	fitness=$(echo "$fitness - (($original_num_developers - $1)*$cost_of_developer_decrease)" | bc -l)
+else
+	fitness=$(echo "$fitness - (($1 - $original_num_developers)*$cost_of_developer_increase)" | bc -l)
+fi
+
+if [ $2 -le $original_num_testers ]; then
+        fitness=$(echo "$fitness - (($original_num_testers - $2)*$cost_of_tester_decrease)" | bc -l)
+else
+	fitness=$(echo "$fitness - (($1 - $original_num_testers)*$cost_of_tester_increase)" | bc -l)
+fi
+
+if [ $3 -le $original_num_defects ]; then
+        fitness=$(echo "$fitness - (($original_num_defects - $2)*$cost_of_defect_decrease)" | bc -l)
+else
+	fitness=$(echo "$fitness - (($1 - $original_num_defects)*$cost_of_defect_increase)" | bc -l)
+fi
+
+echo $fitness
