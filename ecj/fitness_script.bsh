@@ -21,9 +21,6 @@ rm -fr csv nfg
 mkdir csv nfg
 python bug-report-simmodel/getequilibrium.py  $1 $2 $3 $equilibrium_results &>/dev/null
 
-#Remove the following
-#cp ALL_vanilla_equilibrium_results.csv $equilibrium_results
-
 extracted_columns=$(mktemp /tmp/XXXX)
 
 ./column_extractor.bsh $equilibrium_results required_columns.dat >$extracted_columns
@@ -31,23 +28,19 @@ extracted_columns=$(mktemp /tmp/XXXX)
 current_worst=$(mktemp /tmp/XXXX)
 echo "100.0" >$current_worst
 
+test=0
 cat $extracted_columns | while read line; do
-#  symetric_value=$(echo $line | cut -d , -f 1)
   value=$(echo $line | cut -d , -f 2)
-#  if [ "$symetric_value" != "True" ]; then
-#    cp $equilibrium_results ERROR_MATRIX.csv
-#    >&2 echo "ERROR: Symetric is not 'True'. Aborted. Offending file stored as 'ERROR_MATRIX.csv'"
-#    exit 1
-#  fi
   if (( $(echo "$(cat $current_worst) > $value" | bc -l) )); then
     echo $value >$current_worst
   fi
+  test=1
 done
 
-#if [ "$(cat $current_worst)" == "100.0" ];then
-#  >&2 echo "ERROR: Did not find any data"
-#  exit 1
-#fi
+if [ "$test" == "0" ];then
+  >&2 echo "ERROR: Did not find any data"
+  exit 1
+fi
 
 fitness=$(echo "$(cat $current_worst) * 1000" | bc -l)
 
