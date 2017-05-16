@@ -1,0 +1,6 @@
+1: `make`
+2: `./run_priority_inflation.bsh`
+
+Remember to set the parameters in 'bug-report-model/gtconfig.py' correctly
+
+IMPORTANT NOTE: This did not work last time I ran it. Project very much still in developement
