@@ -1,8 +1,8 @@
 #!/bin/bash
 
-original_num_developers=100
+original_num_developers=5
 original_num_testers=5
-original_num_defects=100
+original_num_defects=5
 
 cost_of_developer_increase=1.0
 cost_of_tester_increase=0.5
@@ -17,10 +17,12 @@ cost_of_defect_decrease=0.12
 # $3 == number of defects
 
 equilibrium_results=$(mktemp /tmp/XXXX)
-# ./pythonscript $1 $2 $2 $equilibrium_results
+rm -fr csv nfg
+mkdir csv nfg
+python bug-report-simmodel/getequilibrium.py  $1 $2 $3 $equilibrium_results &>/dev/null
 
 #Remove the following
-cp ALL_vanilla_equilibrium_results.csv $equilibrium_results
+#cp ALL_vanilla_equilibrium_results.csv $equilibrium_results
 
 extracted_columns=$(mktemp /tmp/XXXX)
 
@@ -30,22 +32,22 @@ current_worst=$(mktemp /tmp/XXXX)
 echo "100.0" >$current_worst
 
 cat $extracted_columns | while read line; do
-  symetric_value=$(echo $line | cut -d , -f 1)
+#  symetric_value=$(echo $line | cut -d , -f 1)
   value=$(echo $line | cut -d , -f 2)
-  if [ "$symetric_value" != "True" ]; then
-    cp $equilibrium_results ERROR_MATRIX.csv
-    >&2 echo "ERROR: Symetric is not 'True'. Aborted. Offending file stored as 'ERROR_MATRIX.csv'"
-    exit 1
-  fi
+#  if [ "$symetric_value" != "True" ]; then
+#    cp $equilibrium_results ERROR_MATRIX.csv
+#    >&2 echo "ERROR: Symetric is not 'True'. Aborted. Offending file stored as 'ERROR_MATRIX.csv'"
+#    exit 1
+#  fi
   if (( $(echo "$(cat $current_worst) > $value" | bc -l) )); then
     echo $value >$current_worst
   fi
 done
 
-if [ "$(cat $current_worst)" == "100.0" ];then
-  >&2 echo "ERROR: Did not find any data"
-  exit 1
-fi
+#if [ "$(cat $current_worst)" == "100.0" ];then
+#  >&2 echo "ERROR: Did not find any data"
+#  exit 1
+#fi
 
 fitness=$(echo "$(cat $current_worst) * 1000" | bc -l)
 
