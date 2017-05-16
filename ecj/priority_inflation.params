@@ -58,4 +58,4 @@ pop.subpop.0.species.pipe.source.0.source.1	= ec.select.TournamentSelection
 
 select.tournament.size		= 2
 
-eval.problem		= ec.app.priority_inflation.Fitness
+eval.problem		= Fitness

@@ -23,7 +23,7 @@ VERSION = 22
 
 DIRS = \
 ec/*.java \
-ec/app/priority_inflation/*.java \
+*.java \
 ec/breed/*.java \
 ec/coevolve/*.java \
 ec/de/*.java \
@@ -80,7 +80,7 @@ clean:
 	find . -name "*.java*~" -exec rm -rf {} \;
 	rm -rf docs/classdocs/*
 	rm -rf ec/app/moobenchmarks
-
+	rm -rf bug-report-simmodel/*.pyc
 
 dist: clean gui push indent doc jar
 	find . -name "*.stat" -exec rm rf {} \; -print

@@ -1,4 +1,4 @@
-package ec.app.priority_inflation;
+//package ec.app.priority_inflation;
 import ec.*;
 import ec.simple.*;
 import ec.vector.*;
